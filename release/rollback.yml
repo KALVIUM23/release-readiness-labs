@@ -1,2 +1,6 @@
-rollback_strategy: 
-target_version: 
+rollback_strategy: "Immediate kubectl rollout undo or redeploy previous stable version"
+target_version: "v2.2.0"
+trigger_conditions:
+  - "Pod health check failure (/health returning non-200)"
+  - "HTTP 5xx error rate exceeding 1% within 10 minutes post-deployment"
+rollback_command: "kubectl rollout undo deployment/lab-app"
